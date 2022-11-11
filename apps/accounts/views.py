@@ -1,10 +1,10 @@
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
-from ninja import Router
 from django.contrib.auth import authenticate
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.http import JsonResponse
+
+from ninja import Router
 
 from datetime import datetime, timedelta
 import jwt
@@ -17,8 +17,6 @@ from . schemas import (
     TokenReceiveSchema, VerifyPhoneSchema, ResendPhoneOTPSchema, ResendActivationEmailSchema,
     TokenRefreshSchema,  ResetPasswordEmailRequestSchema, SetNewPasswordSchema
 )
-
-from apps.common.custom_methods import CustomUserAuth
 
 from . models import Jwt, Timezone
 from . senders import Util, email_verification_generate_token, password_reset_generate_token
@@ -58,7 +56,7 @@ def decodeJWT(token):
 
     try:
         decoded = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
-    except jwt.ExpiredSignatureError:
+    except:
         return None
 
     print(decoded)

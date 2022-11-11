@@ -1,8 +1,9 @@
 from ninja import Router
-router = Router()
 from apps.common.custom_methods import CustomUserAuth
 
-@router.get('/test', auth=CustomUserAuth())
+router = Router(auth=CustomUserAuth())
+
+@router.get('/test')
 def test(request):
     print(request.user)
     

@@ -1,9 +1,6 @@
-from django.http import HttpRequest
 from django.utils import timezone
 
 from ninja.security import HttpBearer
-
-from typing import Any, Optional
 
 from apps.accounts.models import User
 
@@ -21,9 +18,7 @@ class CustomUserAuth(HttpBearer):
 
         return False
 
-    # class Config:
-    #     arbitrary_types_allowed = True
-
+# We only need the below code when building admin endpoints.
 class CustomAdminUserAuth(HttpBearer):
     def authenticate(self, request, token):
         from accounts.views import decodeJWT
