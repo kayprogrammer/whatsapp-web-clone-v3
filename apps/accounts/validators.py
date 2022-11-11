@@ -1,7 +1,7 @@
-from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 
+import re
 
 class CustomPasswordValidator():
 
@@ -12,9 +12,18 @@ class CustomPasswordValidator():
         if len(password) < 8:
             raise ValidationError(_('Password must contain at least 8 characters'), code="password_too_short")
     def get_help_text(self):
-        return ""
+        return _("Passwords must contain letters, numbers and special characters. It must also contain at least 8 characters")
 
-phone_regex_pattern = RegexValidator(regex=r'^\+[0-9]*$', message='Phone number must be in this format: +1234567890')
+def phoneValidator(value):
+    regex = r'^\+[0-9]*$'
+    match = re.match(regex, value)
+    if not match:
+        raise ValueError('Phone number must be in this format: +1234567890')
+    if len(value) < 10:
+        raise ValueError('Phone number must be at least 10 chars')
+    if len(value) > 15:
+        raise ValueError('Phone number must be at most 15 chars')
+    return value
 
 # class CustomPasswordValidator():
 

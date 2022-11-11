@@ -158,6 +158,7 @@ DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
 #SMS Settings
 SMS_BACKEND = 'sms.backends.twilio.SmsBackend'
+DEFAULT_FROM_PHONE = config('DEFAULT_FROM_PHONE')
 TWILIO_ACCOUNT_SID = config('TWILIO_ACCOUNT_SID')
 TWILIO_AUTH_TOKEN = config('TWILIO_AUTH_TOKEN')
 
@@ -165,7 +166,10 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-SITE_NAME = "Whatsapp Web Clone V3"
+SITE_NAME = config('SITE_NAME')
+FRONTEND_URL = config('FRONTEND_URL')
+
+PASSWORD_RESET_TIMEOUT = 900
 
 logger = logging.getLogger(__name__)
 
@@ -262,7 +266,7 @@ JAZZMIN_SETTINGS = {
 
     # Additional links to include in the user menu on the top right ("app" url type is not allowed)
     "usermenu_links": [
-        {"name": "WWC V3 FrontPage", "url": "/", "new_window": True},
+        {"name": "WWC V3 FrontPage", "url": FRONTEND_URL, "new_window": True},
         {"model": "accounts.user"}
     ],
 
